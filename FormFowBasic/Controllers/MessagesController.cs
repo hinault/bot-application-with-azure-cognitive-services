@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using FormFowBasic.Models;
+using Microsoft.Bot.Builder.FormFlow;
+using System;
 
 namespace FormFowBasic
 {
@@ -14,11 +17,24 @@ namespace FormFowBasic
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
+
+
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                await Conversation.SendAsync(activity, MakeRootDialog);
+            }
+            else if (activity.Type == ActivityTypes.ContactRelationUpdate)
+            {
+                ConnectorClient client = new ConnectorClient(new Uri(activity.ServiceUrl));
+
+                var reply = activity.CreateReply();
+
+                reply.Text = "Bonjour";
+
+                await client.Conversations.ReplyToActivityAsync(reply);
+
             }
             else
             {
@@ -41,11 +57,7 @@ namespace FormFowBasic
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
             }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
-            }
+            
             else if (message.Type == ActivityTypes.Typing)
             {
                 // Handle knowing tha the user is typing
@@ -55,6 +67,32 @@ namespace FormFowBasic
             }
 
             return null;
+        }
+
+        internal static IDialog<SurveyForm> MakeRootDialog()
+        {
+            return Chain.From(() => FormDialog.FromForm(SurveyForm.BuildForm))
+                .Do(async (context, survey) =>
+                {
+                    try
+                    {
+                        var completed = await survey;
+                       await context.PostAsync("Merci pour votre participation !");
+                    }
+                    catch (FormCanceledException<SurveyForm> e)
+                    {
+                        string reply;
+                        if (e.InnerException == null)
+                        {
+                            reply = "Vous n’avez pas complété l’enquête !";
+                        }
+                        else
+                        {
+                            reply = "Erreur. Essayez plus tard!.";
+                        }
+                        await context.PostAsync(reply);
+                    }
+                });
         }
     }
 }
