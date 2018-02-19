@@ -7,6 +7,7 @@ using Microsoft.Bot.Connector;
 using FormFowBasic.Models;
 using Microsoft.Bot.Builder.FormFlow;
 using System;
+using System.Linq;
 
 namespace FormFowBasic
 {
@@ -25,26 +26,16 @@ namespace FormFowBasic
             {
                 await Conversation.SendAsync(activity, MakeRootDialog);
             }
-            else if (activity.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                ConnectorClient client = new ConnectorClient(new Uri(activity.ServiceUrl));
-
-                var reply = activity.CreateReply();
-
-                reply.Text = "Bonjour";
-
-                await client.Conversations.ReplyToActivityAsync(reply);
-
-            }
+            
             else
             {
-                HandleSystemMessage(activity);
+               await HandleSystemMessage(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
 
-        private Activity HandleSystemMessage(Activity message)
+        private async Task HandleSystemMessage(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
@@ -53,11 +44,22 @@ namespace FormFowBasic
             }
             else if (message.Type == ActivityTypes.ConversationUpdate)
             {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels
+                if (message.MembersAdded.Any(o => o.Id == message.Recipient.Id))
+                {
+                    var reply = message.CreateReply("Bonjour");
+
+                    ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+
             }
-            
+
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
+            {
+               
+            }
+    
             else if (message.Type == ActivityTypes.Typing)
             {
                 // Handle knowing tha the user is typing
@@ -66,7 +68,7 @@ namespace FormFowBasic
             {
             }
 
-            return null;
+           
         }
 
         internal static IDialog<SurveyForm> MakeRootDialog()
