@@ -8,12 +8,18 @@ namespace FormFowBasic.Models
     public class SurveyForm
     {
        
-        public JobOptions Job;
-        public ExperienceOptions Experience;
-        public PlatformOptions Platform;
-        public List<LanguageOptions> Language;
-        public WebFrameworkOptions WebFramework;
-        public CloudOptions Cloud;
+         [Prompt("Quel est votre poste ? {||}")]     
+         public JobOptions Job;
+         [Prompt("Combien d'années d'expérience avez-vous ? {||}")]
+         public ExperienceOptions Experience;
+         [Prompt("Pour quelle plateforme developpez-vous ? {||}")]
+         public PlatformOptions Platform;
+         [Prompt("Quels langages de programmation utilisez-vous ? {||}")]
+         public List<LanguageOptions> Language;
+         [Prompt("Quel Framework Web utilisez-vous ? {||}")]
+         public WebFrameworkOptions WebFramework;
+         [Prompt("Quelle plateforme Cloud utilisez-vous ? {||}")]
+         public CloudOptions Cloud;
 
         public static IForm<SurveyForm> BuildForm()
         {
