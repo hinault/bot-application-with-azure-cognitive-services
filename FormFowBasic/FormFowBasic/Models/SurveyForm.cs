@@ -12,7 +12,7 @@ namespace FormFowBasic.Models
          public JobOptions Job;
          [Prompt("Combien d'années d'expérience avez-vous ? {||}")]
          public ExperienceOptions Experience;
-         [Prompt("Pour quelle plateforme developpez-vous ? {||}")]
+         [Prompt("Pour quelle plateforme développez-vous ? {||}")]
          public PlatformOptions Platform;
          [Prompt("Quels langages de programmation utilisez-vous ? {||}")]
          public List<LanguageOptions> Language;
@@ -32,7 +32,7 @@ namespace FormFowBasic.Models
 
 
     public enum JobOptions {Developpeur_junior=1, Developpeur_senior, Architecte, Autre};
-    public enum ExperienceOptions {Moin_de_5_ans=1, De_5_a_10_ans, Plus_de_10_ans};
+    public enum ExperienceOptions {Moins_de_5_ans=1, De_5_a_10_ans, Plus_de_10_ans};
     public enum PlatformOptions {Web =1, Mobile, Cloud, Desktop};
     public enum LanguageOptions {Csharp=1, Java, JavaScript, C, Ruby, Python,  Autre};
     public enum WebFrameworkOptions { ASPNET_Core = 1, AngularJS, Lavarel, ReactJS, NodeJS, Autre};
