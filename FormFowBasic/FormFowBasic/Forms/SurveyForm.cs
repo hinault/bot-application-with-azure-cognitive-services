@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Bot.Builder.FormFlow;
 
-namespace FormFowBasic.Models
+namespace FormFowBasic.Forms
 {
     [Serializable]
     public class SurveyForm
