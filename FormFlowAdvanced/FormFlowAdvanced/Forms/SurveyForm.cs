@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Bot.Builder.FormFlow;
+using Microsoft.Bot.Builder.FormFlow.Advanced;
 
 namespace FormFowBasic.Forms
 {
     [Serializable]
     public class SurveyForm
     {
+        public bool AskToChooseReport = true;
 
         [Prompt("Quel est votre poste ? {||}")]
         public JobOptions Job;
@@ -34,16 +36,56 @@ namespace FormFowBasic.Forms
                     .Message("Merci de prendre quelques minutes pour repondre aux questions de cette enquête.")
                     .Field(nameof(Job))
                     .Field(nameof(Experience))
-                    .Field(nameof(Platform))
+                    .Field(nameof(Language))
+                    .Field(new FieldReflector<SurveyForm>(nameof(Platform))
+                        .SetNext(SetNextAfterPlatform))
+                    .Field(nameof(WebFramework), state=>state.Platform==PlatformOptions.Web)
+                    .Field(nameof(MobileDevTools), state => state.Platform == PlatformOptions.Mobile)
+                    .Field(nameof(Cloud), state => state.Platform == PlatformOptions.Cloud)
+                     .Field(new FieldReflector<SurveyForm>(nameof(Newsletter))
+                        .SetNext(SetNextAfterNewsletter))
+                     .Field(nameof(Email), state => state.Newsletter)
+                     .Confirm("Est-ce votre selection ? {*}")
                     .Build();
-                    
-                    
+                      
+        }
+
+        private static NextStep SetNextAfterPlatform(object value, SurveyForm state)
+        {
+            var selection = (PlatformOptions)value;
+            state.Platform = selection;
+            if (selection == PlatformOptions.Web)
+            {
+                return new NextStep(new[] { nameof(WebFramework) });
+            }
+            else if (selection == PlatformOptions.Mobile)
+            {
+                return new NextStep(new[] { nameof(MobileDevTools) });
+            }
+            else
+            {
+                return new NextStep(new[] { nameof(Cloud) });
+            }
+        }
+
+
+        private static NextStep SetNextAfterNewsletter(object value, SurveyForm state)
+        {
+            if ((bool)value == true)
+            {
+                return new NextStep(new[] { nameof(Email) });
+            }
+            else
+            {
+
+                return new NextStep();
+            }
         }
 
     }
 
 
-    public enum JobOptions
+        public enum JobOptions
     {
         [Describe("Développeur junior")]
         [Terms("junior", "Développeur junior", "Developpeur junior")]
@@ -64,8 +106,7 @@ namespace FormFowBasic.Forms
     {
         Web =1,
         Mobile,
-        Cloud,
-        Desktop
+        Cloud
     };
     public enum LanguageOptions
     {
