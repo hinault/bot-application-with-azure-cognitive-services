@@ -96,18 +96,21 @@ namespace FormFowBasic.Forms
         Architecte,
         Autre
     };
+
     public enum ExperienceOptions
     {
         Moins_de_5_ans =1,
         De_5_a_10_ans,
         Plus_de_10_ans
     };
+
     public enum PlatformOptions
     {
         Web =1,
         Mobile,
         Cloud
     };
+
     public enum LanguageOptions
     {
         [Describe("C#")]
@@ -120,6 +123,7 @@ namespace FormFowBasic.Forms
         Python,
         Autre
     };
+
     public enum WebFrameworkOptions
     {
         [Describe("ASP.NET Core")]
@@ -137,6 +141,7 @@ namespace FormFowBasic.Forms
         NodeJS,
         Autre
     };
+
     public enum MobileDevToolsOptions
     {
         Xamarin=1,
@@ -146,6 +151,7 @@ namespace FormFowBasic.Forms
         Sencha,
         Autre
     }
+
     public enum CloudOptions
     {
         Microsoft_Azure =1,
