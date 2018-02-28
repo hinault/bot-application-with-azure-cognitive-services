@@ -8,8 +8,7 @@ namespace FormFowBasic.Forms
     [Serializable]
     public class SurveyForm
     {
-        public bool AskToChooseReport = true;
-
+      
         [Prompt("Quel est votre poste ? {||}")]
         public JobOptions Job;
         [Prompt("Combien d'années d'expérience avez-vous ? {||}")]
