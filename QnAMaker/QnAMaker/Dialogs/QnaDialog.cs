@@ -21,7 +21,7 @@ namespace QnAMaker.Dialogs
 
         protected override async Task RespondFromQnAMakerResultAsync(IDialogContext context, IMessageActivity message, QnAMakerResults result)
         {
-            // answer is a string
+          
             var answer = result.Answers.First().Answer;
 
             Activity reply = ((Activity)context.Activity).CreateReply();
