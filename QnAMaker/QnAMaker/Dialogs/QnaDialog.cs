@@ -7,6 +7,8 @@ using Microsoft.Bot.Connector;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using QnAMaker.Models;
+using System.Collections.Generic;
 
 namespace QnAMaker.Dialogs
 {
@@ -22,12 +24,29 @@ namespace QnAMaker.Dialogs
             // answer is a string
             var answer = result.Answers.First().Answer;
 
-         
-
             Activity reply = ((Activity)context.Activity).CreateReply();
 
-            try { 
-            var response = JObject.Parse(answer);
+            try
+            {
+
+                var response = JsonConvert.DeserializeObject<FormattedAnswer>(answer);
+
+                HeroCard card = new HeroCard
+                {
+                    Title = response.Title,
+                    Subtitle = response.Description,
+                    Buttons = new List<CardAction>
+                         {
+                             new CardAction(ActionTypes.OpenUrl, response.BoutonText, value: response.Url)
+                         },
+                    Images = new List<CardImage>
+                        {
+                             new CardImage(url:response.Image)
+                        }
+                };
+                
+                reply.Attachments.Add(card.ToAttachment());
+            
             }
             catch(JsonReaderException)
             { 
