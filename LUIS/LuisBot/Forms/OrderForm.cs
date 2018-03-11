@@ -1,4 +1,5 @@
 ﻿using Microsoft.Bot.Builder.FormFlow;
+using Microsoft.Bot.Builder.FormFlow.Advanced;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace LuisBot.Forms
         public TypeOptions Type;
         [Prompt("Veuillez choisir la taille ? {||}")]
         public SizeOptions Size;
-        [Prompt("Voulez des extras ? {||}")]
+        [Prompt("Voulez-vous des extras ? {||}")]
         public Boolean AddExtra { get; set; }
-        [Prompt("Voulez des extras ? {||}")]
+        [Prompt("Veuillez choisir les extras ? {||}")]
         public List<ExtraOptions> Extras;
         
 
@@ -29,6 +30,20 @@ namespace LuisBot.Forms
                     .Message("Merci de prendre quelques minutes pour repondre aux questions de cette enquête.")
                     .Build();
         }
+
+        private static NextStep SetNextAddExtra(object value, OrderForm state)
+        {
+            if ((bool)value == true)
+            {
+                return new NextStep(new[] { nameof(Extras) });
+            }
+            else
+            {
+
+                return new NextStep();
+            }
+        }
+
 
     }
 
