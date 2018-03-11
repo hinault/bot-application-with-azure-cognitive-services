@@ -10,17 +10,21 @@ namespace LuisBot.Forms
     public class OrderForm
     {
 
-        public Boolean Lenghtactf { get; set; }
-        [Prompt("Quel est votre poste ? {||}")]
-        public JobOptions Job;
-        [Prompt("Combien d'années d'expérience avez-vous ? {||}")]
-        public ExperienceOptions Experience;
-        [Prompt("Pour quelle plateforme développez-vous ? {||}")]
-        public PlatformOptions Platform;
+        public Boolean SizeSelected = false;
+        public Boolean TypeSelected = false;
+        [Prompt("Veuillez selectionner votre type de poutine ? {||}")]
+        public TypeOptions Type;
+        [Prompt("Veuillez choisir la taille ? {||}")]
+        public SizeOptions Size;
+        [Prompt("Voulez des extras ? {||}")]
+        public Boolean AddExtra { get; set; }
+        [Prompt("Voulez des extras ? {||}")]
+        public List<ExtraOptions> Extras;
         
 
         public static IForm<OrderForm> BuildForm()
         {
+
             return new FormBuilder<OrderForm>()
                     .Message("Merci de prendre quelques minutes pour repondre aux questions de cette enquête.")
                     .Build();
@@ -29,9 +33,7 @@ namespace LuisBot.Forms
     }
 
 
-    public enum JobOptions { Developpeur_junior = 1, Developpeur_senior, Architecte, Autre };
-    public enum ExperienceOptions { Moins_de_5_ans = 1, De_5_a_10_ans, Plus_de_10_ans };
-    public enum PlatformOptions { Web = 1, Mobile, Cloud, Desktop };
+   
 
     public enum TypeOptions {
         [Describe(title:"Specialité de la maison", description: "Fromage en grains, mozzarella, boeuf braisé et sauce au vin rouge.", 
@@ -48,7 +50,15 @@ namespace LuisBot.Forms
         Parrain
         }
     public enum SizeOptions {Petit, Moyen, Grand};
-    public 
+    public enum ExtraOptions {
+        Bacon,
+        Viande_haché,
+        Jambon,
+        Pepperoni,
+        Oeuf,
+        Porc_effiloché,
+        Steak
+    }
    
    
 }
