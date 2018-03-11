@@ -28,6 +28,11 @@ namespace LuisBot.Forms
 
             return new FormBuilder<OrderForm>()
                     .Message("Merci de prendre quelques minutes pour repondre aux questions de cette enquête.")
+                    .Field(nameof(Type), state=>!state.TypeSelected)
+                    .Field(nameof(Size), state=>!state.SizeSelected)
+                    .Field(nameof(AddExtra))
+                    .Field(nameof(Extras), state=>state.AddExtra)
+                    .Confirm("Est-ce votre selection ? {*}")
                     .Build();
         }
 
