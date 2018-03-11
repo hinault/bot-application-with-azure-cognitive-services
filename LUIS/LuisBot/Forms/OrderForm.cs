@@ -21,23 +21,27 @@ namespace LuisBot.Forms
         public Boolean AddExtra { get; set; }
         [Prompt("Veuillez choisir les extras ? {||}")]
         public List<ExtraOptions> Extras;
-        
+        [Prompt("Veuillez saisir votre nom ? {||}")]
+        public string Name { get; set; }
+
 
         public static IForm<OrderForm> BuildForm()
         {
 
             return new FormBuilder<OrderForm>()
-                    .Message("Merci de prendre quelques minutes pour repondre aux questions de cette enquête.")
-                    .Field(nameof(Type), state=>!state.TypeSelected)
-                    .Field(nameof(Size), state=>!state.SizeSelected)
+                    .Field(nameof(Type))
+                    .Field(nameof(Size))
                     .Field(nameof(AddExtra))
                     .Field(nameof(Extras), state=>state.AddExtra)
-                    .Confirm("Est-ce votre selection ? {*}")
+                    .Field(nameof(Extras), state => state.AddExtra)
+                    .Field(nameof(Name))
+                    .Confirm("Vos choix sont-ils corrects ? {*}")
                     .Build();
         }
 
-        private static NextStep SetNextAddExtra(object value, OrderForm state)
+        private static NextStep SetNextAfterAddExtra(object value, OrderForm state)
         {
+           
             if ((bool)value == true)
             {
                 return new NextStep(new[] { nameof(Extras) });
@@ -53,25 +57,27 @@ namespace LuisBot.Forms
     }
 
 
-   
-
     public enum TypeOptions {
-        [Describe(title:"Specialité de la maison", description: "Fromage en grains, mozzarella, boeuf braisé et sauce au vin rouge.", 
-            image: "http://rdonfack.developpez.com/images/maison.PNG")]
-        Maison,
-        [Describe(title: "Classique", description: "Fromage en grains, frites et sauce maison",
-            image: "http://rdonfack.developpez.com/images/classique.PNG")]
+        [Describe(title:"Specialité de la maison", subTitle: "Fromage en grains, mozzarella, boeuf braisé et sauce au vin rouge.", 
+            image: "http://rdonfack.developpez.com/images/maison.PNG",message:"Maison")]
+        Maison=1,
+        [Describe(title: "Classique", subTitle: "Fromage en grains, frites et sauce maison",
+            image: "http://rdonfack.developpez.com/images/classique.PNG", message: "Classique")]
         Classique,
-        [Describe(title: "Le fermier", description: "Saucisses italiennes, poivrons rouges, augergines marinées, grains frais, sauce à la viande et mozzarella gratiné.", 
-            image: "http://rdonfack.developpez.com/images/fermier.PNG")]
+        [Describe(title: "Le fermier", subTitle: "Saucisses italiennes, poivrons rouges, augergines marinées, grains frais, sauce à la viande et mozzarella gratiné.", 
+            image: "http://rdonfack.developpez.com/images/fermier.PNG", message: "Fermier")]
         Fermier,
-        [Describe(title: "Le parrain", description: "Poulet grillé, bacon, tomates en dés et fromage en grain.", 
-            image: "http://rdonfack.developpez.com/images/parrain.PNG")]
+        [Describe(title: "Le parrain", subTitle: "Poulet grillé, bacon, tomates en dés et fromage en grain.", 
+            image: "http://rdonfack.developpez.com/images/parrain.PNG", message: "Parrain")]
         Parrain
         }
-    public enum SizeOptions {Petit, Moyen, Grand};
+    public enum SizeOptions {
+        Petite =1,
+        [Terms("Moyen", "Moyenne")]
+        Moyenne,
+        Grande };
     public enum ExtraOptions {
-        Bacon,
+        Bacon=1,
         Viande_haché,
         Jambon,
         Pepperoni,

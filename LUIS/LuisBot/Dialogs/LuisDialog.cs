@@ -8,6 +8,8 @@ using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Builder.FormFlow;
 using LuisBot.Forms;
 using System.Linq;
+using Microsoft.Bot.Connector;
+using System.Collections.Generic;
 
 namespace LuisBot.Dialogs
 {
@@ -24,13 +26,6 @@ namespace LuisBot.Dialogs
 
 
         }
-
-        //private readonly BuildFormDelegate<OrderForm> MakeOrderForm;
-
-        //internal OrderFormDialog(BuildFormDelegate<OrderForm> makeOrderForm)
-        //{
-        //    MakeOrderForm = makeOrderForm;
-        //}
 
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
@@ -81,14 +76,14 @@ namespace LuisBot.Dialogs
                 {
                     case "petit":
                     case "junior":
-                        order.Size = SizeOptions.Petit;
+                        order.Size = SizeOptions.Petite;
                         break;
                     case "moyen":
-                        order.Size = SizeOptions.Moyen;
+                        order.Size = SizeOptions.Moyenne;
                         break;
                     case "grand":
                     case "senior":
-                        order.Size = SizeOptions.Grand;
+                        order.Size = SizeOptions.Grande;
                         break;
 
                 }   
@@ -149,7 +144,14 @@ namespace LuisBot.Dialogs
 
             if (order != null)
             {
-                await context.PostAsync("Your Pizza Order: " + order.ToString());
+
+                var message = context.MakeMessage();
+
+                message.Text = "Ci-dessous votre reçu!";
+                message.Attachments.Add(GetReceiptCard(order));
+
+
+                await context.PostAsync(message);
             }
             else
             {
@@ -157,6 +159,57 @@ namespace LuisBot.Dialogs
             }
 
             context.Wait(MessageReceived);
+        }
+
+
+
+        private static Attachment GetReceiptCard(OrderForm order)
+        {
+            var receiptCard = new ReceiptCard
+            {
+                Title = "Mr/Mme " + order.Name,
+                Facts = new List<Fact> { new Fact("Commande No", "xxxxxxx"), new Fact("Méthode de paiement", "Carte") },
+              
+            };
+
+            var receiptItems = new List<ReceiptItem>();
+
+            int price=0;
+
+            double tax;
+
+            switch (order.Size)
+            {
+                case SizeOptions.Petite:
+                    price =order.Type==TypeOptions.Classique? 5 : 7;
+                    break;
+
+                case SizeOptions.Moyenne:
+                    price = order.Type == TypeOptions.Classique ? 7 : 9;
+                    break;
+                case SizeOptions.Grande:
+                    price = order.Type == TypeOptions.Classique ? 9 : 11;
+                    break;
+            }
+
+
+            receiptItems.Add(new ReceiptItem("Poutine " + order.Type.ToString() + " " + order.Size.ToString(), price: price.ToString()+"$", quantity: "1"));
+
+            if (order.Extras != null )
+            { 
+               order.Extras.ForEach(x => {
+                receiptItems.Add(new ReceiptItem("Extra " + x.ToString(), price: "1$", quantity: "1"));
+            });
+
+                price = price + order.Extras.Count();
+            }
+            tax = price * 0.15;
+            receiptCard.Tax = tax.ToString("###.##") + "$";
+            receiptCard.Total = (price + tax).ToString("###.##") + "$";
+            receiptCard.Items = receiptItems;
+            
+
+            return receiptCard.ToAttachment();
         }
 
     }
