@@ -7,6 +7,7 @@ using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Builder.FormFlow;
 using LuisBot.Forms;
+using System.Linq;
 
 namespace LuisBot.Dialogs
 {
@@ -41,12 +42,59 @@ namespace LuisBot.Dialogs
         public async Task OrderIntent(IDialogContext context, LuisResult result)
         {
 
-            var order = new OrderForm
-            {
-                Lenghtactf = true
-            };
+            var order = new OrderForm();
+           
+            var typeEntity = result.Entities.FirstOrDefault(x=>x.Type == "Type");
 
-            var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptFieldsWithValues);
+            if (typeEntity != null)
+             {
+                order.TypeSelected = true;
+                switch (typeEntity.Entity)
+                {
+                    case "classique":
+                    case "simple":
+                    case "regulier":
+                    case "régulier":
+                    case "regulière":
+                    case "régulière":
+                        order.Type = TypeOptions.Classique;
+                        break;
+                    case "fermier":
+                        order.Type = TypeOptions.Fermier;
+                        break;
+                    case "maison":
+                        order.Type = TypeOptions.Maison;
+                        break;
+                    case "parrain":
+                        order.Type = TypeOptions.Parrain;
+                        break;
+                }
+            }
+
+            var SizeEntity = result.Entities.FirstOrDefault(x => x.Type == "Taille");
+
+            if(SizeEntity!=null)
+            {
+                order.SizeSelected = true;
+
+                switch (SizeEntity.Entity)
+                {
+                    case "petit":
+                    case "junior":
+                        order.Size = SizeOptions.Petit;
+                        break;
+                    case "moyen":
+                        order.Size = SizeOptions.Moyen;
+                        break;
+                    case "grand":
+                    case "senior":
+                        order.Size = SizeOptions.Grand;
+                        break;
+
+                }   
+            }
+
+            var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptInStart);
             context.Call<OrderForm>(orderForm, OrderFormComplete);
 
            // await this.ShowLuisResult(context, result);
