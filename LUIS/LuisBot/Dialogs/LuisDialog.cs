@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Builder.FormFlow;
+using LuisBot.Forms;
+
 namespace LuisBot.Dialogs
 {
+    
     [Serializable]
     public class LuisDialog : LuisDialog<object>
     {
@@ -20,6 +24,13 @@ namespace LuisBot.Dialogs
 
         }
 
+        //private readonly BuildFormDelegate<OrderForm> MakeOrderForm;
+
+        //internal OrderFormDialog(BuildFormDelegate<OrderForm> makeOrderForm)
+        //{
+        //    MakeOrderForm = makeOrderForm;
+        //}
+
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
         {
@@ -29,7 +40,16 @@ namespace LuisBot.Dialogs
         [LuisIntent("Order.Poutine")]
         public async Task OrderIntent(IDialogContext context, LuisResult result)
         {
-            await this.ShowLuisResult(context, result);
+
+            var order = new OrderForm
+            {
+                Lenghtactf = true
+            };
+
+            var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptFieldsWithValues);
+            context.Call<OrderForm>(orderForm, OrderFormComplete);
+
+           // await this.ShowLuisResult(context, result);
         }
 
 
@@ -64,6 +84,32 @@ namespace LuisBot.Dialogs
             context.Wait(MessageReceived);
         }
 
+
+
+        private async Task OrderFormComplete(IDialogContext context, IAwaitable<OrderForm> result)
+        {
+            OrderForm order = null;
+            try
+            {
+                order = await result;
+            }
+            catch (OperationCanceledException)
+            {
+                await context.PostAsync("You canceled the form!");
+                return;
+            }
+
+            if (order != null)
+            {
+                await context.PostAsync("Your Pizza Order: " + order.ToString());
+            }
+            else
+            {
+                await context.PostAsync("Form returned empty response!");
+            }
+
+            context.Wait(MessageReceived);
+        }
 
     }
 }
