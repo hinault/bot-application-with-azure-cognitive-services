@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using SentimentAnalysisBot.Services;
+using System;
 
 namespace SentimentAnalysisBot
 {
@@ -18,7 +20,20 @@ namespace SentimentAnalysisBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                var result = await TextAnalyticsService.AnalyseSentiment(activity.Text);
+
+                var reply = activity.CreateReply();
+
+                reply.Text = "Votre langue est : " + result.LanguageName + "\n\n";
+                reply.Text += "Les mots clés trouvés sont : " + result.KeyPhrases.ToString() + "\n\n";
+                if (result.Score.Value > 0.5)
+                    reply.Text += "Vous semblez heureux. Votre score est de : " + result.Score.Value;
+                else
+                    reply.Text += "Vous ne semblez pas heureux. Votre score est de : " + result.Score.Value;
+
+                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
+                await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
             {
