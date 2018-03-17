@@ -49,6 +49,9 @@
     <Reference Include="Chronic, Version=0.3.2.0, Culture=neutral, PublicKeyToken=3bd1f1ef638b0d3c, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Chronic.Signed.0.3.2\lib\net40\Chronic.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.CognitiveServices.Language, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.CognitiveServices.Language.1.0.0-preview\lib\net452\Microsoft.Azure.CognitiveServices.Language.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bot.Builder, Version=3.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Microsoft.Bot.Builder.3.8.0\lib\net46\Microsoft.Bot.Builder.dll</HintPath>
     </Reference>
@@ -63,7 +66,10 @@
       <HintPath>$(SolutionDir)\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.4.403061554\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\Microsoft.Rest.ClientRuntime.2.3.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.10\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.10\lib\net452\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
