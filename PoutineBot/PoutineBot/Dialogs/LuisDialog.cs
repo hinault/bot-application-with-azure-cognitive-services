@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.Bot.Connector;
 using System.Collections.Generic;
 using System.Threading;
+using PoutineBot.Services;
 
 namespace PoutineBot.Dialogs
 {
@@ -121,9 +122,9 @@ namespace PoutineBot.Dialogs
         }
 
       
-        private async Task ShowLuisResult(IDialogContext context, LuisResult result)
+        private async Task ShowLuisResult(IDialogContext context, LuisResult luisResult)
         {
-            await context.PostAsync($"You have reached {result.Intents[0].Intent}. You said: {result.Query}");
+            await context.PostAsync($"You have reached {luisResult.Intents[0].Intent}. You said: {luisResult.Query}");
             context.Wait(MessageReceived);
         }
 
@@ -133,6 +134,12 @@ namespace PoutineBot.Dialogs
             context.Wait(MessageReceived);
         }
 
+        private async Task ResumeAfterSentimentAnalysis(IDialogContext context, LuisResult luisResult)
+        {
+
+            var result = await TextAnalyticsService.AnalyseSentiment(luisResult.Query);
+
+        }
 
             private async Task OrderFormComplete(IDialogContext context, IAwaitable<OrderForm> result)
         {
