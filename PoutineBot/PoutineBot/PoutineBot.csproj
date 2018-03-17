@@ -113,11 +113,17 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\LuisDialog.cs" />
+    <Compile Include="Dialogs\QnaDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
+    <Compile Include="Forms\OrderForm.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormattedAnswer.cs" />
+    <Compile Include="Models\TextAnalyticsResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TextAnalyticsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
