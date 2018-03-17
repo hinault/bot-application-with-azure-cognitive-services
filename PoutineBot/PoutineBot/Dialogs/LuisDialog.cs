@@ -9,6 +9,7 @@ using PoutineBot.Forms;
 using System.Linq;
 using Microsoft.Bot.Connector;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace PoutineBot.Dialogs
 {
@@ -29,7 +30,7 @@ namespace PoutineBot.Dialogs
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
         {
-            await this.ShowLuisResult(context, result);
+            await context.Forward(new QnaDialog(), ResumeAfterQnaDialog, context.Activity, CancellationToken.None);
         }
 
         [LuisIntent("Order.Poutine")]
@@ -127,8 +128,13 @@ namespace PoutineBot.Dialogs
         }
 
 
+        private async Task ResumeAfterQnaDialog(IDialogContext context, IAwaitable<object> result)
+        {
+            context.Wait(MessageReceived);
+        }
 
-        private async Task OrderFormComplete(IDialogContext context, IAwaitable<OrderForm> result)
+
+            private async Task OrderFormComplete(IDialogContext context, IAwaitable<OrderForm> result)
         {
             OrderForm order = null;
             try
