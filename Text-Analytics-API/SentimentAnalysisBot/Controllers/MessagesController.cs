@@ -26,11 +26,17 @@ namespace SentimentAnalysisBot
                 var reply = activity.CreateReply();
 
                 reply.Text = "Votre langue est : " + result.LanguageName + "\n\n";
-                reply.Text += "Les mots clés trouvés sont : " + result.KeyPhrases.ToString() + "\n\n";
+                reply.Text += "Les mots clés trouvés sont : ";
+
+                foreach (var item in result.KeyPhrases)
+                {
+                    reply.Text += item + " ";
+                }
+
                 if (result.Score.Value > 0.5)
-                    reply.Text += "Vous semblez heureux. Votre score est de : " + result.Score.Value;
+                    reply.Text += "\n\n Vous semblez heureux. Votre score est de : " + result.Score.Value;
                 else
-                    reply.Text += "Vous ne semblez pas heureux. Votre score est de : " + result.Score.Value;
+                    reply.Text += "\n\n Vous ne semblez pas heureux. Votre score est de : " + result.Score.Value;
 
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
 
@@ -38,7 +44,7 @@ namespace SentimentAnalysisBot
             }
             else
             {
-                HandleSystemMessage(activity);
+               await HandleSystemMessage(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
@@ -56,7 +62,7 @@ namespace SentimentAnalysisBot
                 if (message.MembersAdded.Any(o => o.Id == message.Recipient.Id))
                 {
                     var reply = message.CreateReply("Bonjour \n\n");
-                    reply.Text = "Dites quelque chose afin que nous puissions procéder à son analyse.";
+                    reply.Text += "Dites quelque chose afin que nous puissions procéder à son analyse.";
 
                     ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
 
@@ -75,8 +81,6 @@ namespace SentimentAnalysisBot
             else if (message.Type == ActivityTypes.Ping)
             {
             }
-
-            return null;
         }
     }
 }

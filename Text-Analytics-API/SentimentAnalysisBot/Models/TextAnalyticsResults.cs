@@ -16,5 +16,6 @@ namespace SentimentAnalysisBot.Models
 
         public IList<string> KeyPhrases { get; set; }
 
+
     }
 }
