@@ -6,6 +6,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using SentimentAnalysisBot.Services;
 using System;
+using System.Linq;
 
 namespace SentimentAnalysisBot
 {
@@ -43,7 +44,7 @@ namespace SentimentAnalysisBot
             return response;
         }
 
-        private Activity HandleSystemMessage(Activity message)
+        private async Task HandleSystemMessage(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
@@ -52,9 +53,15 @@ namespace SentimentAnalysisBot
             }
             else if (message.Type == ActivityTypes.ConversationUpdate)
             {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels
+                if (message.MembersAdded.Any(o => o.Id == message.Recipient.Id))
+                {
+                    var reply = message.CreateReply("Bonjour \n\n");
+                    reply.Text = "Dites quelque chose afin que nous puissions procéder à son analyse.";
+
+                    ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
