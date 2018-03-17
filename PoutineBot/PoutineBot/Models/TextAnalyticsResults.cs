@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SentimentAnalysisBot.Models
+namespace PoutineBot.Models
 {
     public class TextAnalyticsResults
     {

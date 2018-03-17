@@ -3,9 +3,9 @@ using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
 using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
 using System.Configuration;
 using System.Collections.Generic;
-using SentimentAnalysisBot.Models;
+using PoutineBot.Models;
 
-namespace SentimentAnalysisBot.Services
+namespace PoutineBot.Services
 {
     public class TextAnalyticsService
     {

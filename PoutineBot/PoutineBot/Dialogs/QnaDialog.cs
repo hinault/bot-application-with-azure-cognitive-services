@@ -7,10 +7,10 @@ using Microsoft.Bot.Connector;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using QnAMaker.Models;
+using PoutineBot.Models;
 using System.Collections.Generic;
 
-namespace QnAMaker.Dialogs
+namespace PoutineBot.Dialogs
 {
     [Serializable]
     public class QnaDialog : QnAMakerDialog

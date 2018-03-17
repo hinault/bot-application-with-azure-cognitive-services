@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Configuration;
 using System.Threading.Tasks;
-
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Builder.FormFlow;
-using LuisBot.Forms;
+using PoutineBot.Forms;
 using System.Linq;
 using Microsoft.Bot.Connector;
 using System.Collections.Generic;
 
-namespace LuisBot.Dialogs
+namespace PoutineBot.Dialogs
 {
     
     [Serializable]

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LuisBot.Forms
+namespace PoutineBot.Forms
 {
     [Serializable]
     public class OrderForm

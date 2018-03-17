@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace QnAMaker.Models
+namespace PoutineBot.Models
 {
     public class FormattedAnswer
     {
