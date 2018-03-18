@@ -40,12 +40,12 @@ namespace PoutineBot.Dialogs
 
             var order = new OrderForm();
            
-            var typeEntity = result.Entities.FirstOrDefault(x=>x.Type == "Type");
+            var typeEntity = result.Entities.FirstOrDefault(x=>x.Type == "Type")?.Entity;
 
             if (typeEntity != null)
              {
-                order.TypeSelected = true;
-                switch (typeEntity.Entity)
+               
+                switch (typeEntity)
                 {
                     case "classique":
                     case "simple":
@@ -67,22 +67,23 @@ namespace PoutineBot.Dialogs
                 }
             }
 
-            var SizeEntity = result.Entities.FirstOrDefault(x => x.Type == "Taille");
+            var SizeEntity = result.Entities.FirstOrDefault(x => x.Type == "Taille")?.Entity;
 
             if(SizeEntity!=null)
             {
-                order.SizeSelected = true;
-
-                switch (SizeEntity.Entity)
+                switch (SizeEntity)
                 {
                     case "petit":
                     case "junior":
+                    case "petite":
                         order.Size = SizeOptions.Petite;
                         break;
                     case "moyen":
+                    case "moyenne":
                         order.Size = SizeOptions.Moyenne;
                         break;
                     case "grand":
+                    case "grande":
                     case "senior":
                         order.Size = SizeOptions.Grande;
                         break;

@@ -11,8 +11,6 @@ namespace PoutineBot.Forms
     public class OrderForm
     {
 
-        public Boolean SizeSelected = false;
-        public Boolean TypeSelected = false;
         [Prompt("Veuillez selectionner votre type de poutine ? {||}")]
         public TypeOptions Type;
         [Prompt("Veuillez choisir la taille ? {||}")]
