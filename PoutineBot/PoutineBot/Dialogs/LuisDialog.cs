@@ -138,6 +138,16 @@ namespace PoutineBot.Dialogs
         {
 
             var result = await TextAnalyticsService.AnalyseSentiment(luisResult.Query);
+            if (result.Score.Value>0.7)
+            {
+                await context.PostAsync("Merci d'apprecié nos services. Nous travaillons dur pour vous offrir un service de qualité");
+                context.Wait(MessageReceived);
+            }
+            else
+            {
+
+
+            }
 
         }
 
@@ -150,7 +160,7 @@ namespace PoutineBot.Dialogs
             }
             catch (OperationCanceledException)
             {
-                await context.PostAsync("You canceled the form!");
+                await context.PostAsync("Opération annulée!");
                 return;
             }
 
@@ -167,7 +177,7 @@ namespace PoutineBot.Dialogs
             }
             else
             {
-                await context.PostAsync("Form returned empty response!");
+                await context.PostAsync("Opération annulée!");
             }
 
             context.Wait(MessageReceived);
