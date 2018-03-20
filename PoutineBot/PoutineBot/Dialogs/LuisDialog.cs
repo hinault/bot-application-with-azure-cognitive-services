@@ -31,7 +31,7 @@ namespace PoutineBot.Dialogs
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
         {
-            await context.Forward(new QnaDialog(), ResumeAfterQnaDialog, context.Activity, CancellationToken.None);
+            await context.Forward(new QnaDialog(), ResumeAfterDialog, context.Activity, CancellationToken.None);
         }
 
         [LuisIntent("Order.Poutine")]
@@ -113,7 +113,7 @@ namespace PoutineBot.Dialogs
         [LuisIntent("Feedback.RecieveFeedback")]
         public async Task RecieveFeedbackIntent(IDialogContext context, LuisResult result)
         {
-            await this.ShowLuisResult(context, result);
+            await this.ProcessSentimentAnalysis(context, result);
         }
 
         [LuisIntent("Feedback.GetFeedback")]
@@ -130,12 +130,12 @@ namespace PoutineBot.Dialogs
         }
 
 
-        private async Task ResumeAfterQnaDialog(IDialogContext context, IAwaitable<object> result)
+        private async Task ResumeAfterDialog(IDialogContext context, IAwaitable<object> result)
         {
             context.Wait(MessageReceived);
         }
 
-        private async Task ResumeAfterSentimentAnalysis(IDialogContext context, LuisResult luisResult)
+        private async Task ProcessSentimentAnalysis(IDialogContext context, LuisResult luisResult)
         {
 
             var result = await TextAnalyticsService.AnalyseSentiment(luisResult.Query);
@@ -146,7 +146,8 @@ namespace PoutineBot.Dialogs
             }
             else
             {
-
+                var feedbackForm = new FormDialog<FeedbackForm>(new FeedbackForm(), FeedbackForm.BuildForm, FormOptions.PromptInStart);
+                context.Call<FeedbackForm>(feedbackForm, ResumeAfterDialog);
 
             }
 

@@ -30,7 +30,6 @@ namespace PoutineBot.Forms
                     .Field(nameof(Type))
                     .Field(nameof(Size))
                     .Field(nameof(AddExtra))
-                    .Field(nameof(Extras), state=>state.AddExtra)
                     .Field(nameof(Extras), state => state.AddExtra)
                     .Field(nameof(Name))
                     .Confirm("Vos choix sont-ils corrects ? {*}")
