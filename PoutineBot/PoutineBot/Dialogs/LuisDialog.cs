@@ -94,21 +94,9 @@ namespace PoutineBot.Dialogs
             var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptInStart);
             context.Call<OrderForm>(orderForm, OrderFormComplete);
 
-           // await this.ShowLuisResult(context, result);
+         
         }
 
-
-        [LuisIntent("Order.Cancel")]
-        public async Task CancelIntent(IDialogContext context, LuisResult result)
-        {
-            await this.ShowLuisResult(context, result);
-        }
-
-        [LuisIntent("Reservation.Reserve")]
-        public async Task ReservationIntent(IDialogContext context, LuisResult result)
-        {
-            await this.ShowLuisResult(context, result);
-        }
 
         [LuisIntent("Feedback.RecieveFeedback")]
         public async Task RecieveFeedbackIntent(IDialogContext context, LuisResult result)
@@ -122,7 +110,18 @@ namespace PoutineBot.Dialogs
             await this.ShowLuisResult(context, result);
         }
 
-      
+        [LuisIntent("Order.Cancel")]
+        public async Task CancelIntent(IDialogContext context, LuisResult result)
+        {
+            await this.ShowLuisResult(context, result);
+        }
+
+        [LuisIntent("Reservation.Reserve")]
+        public async Task ReservationIntent(IDialogContext context, LuisResult result)
+        {
+            await this.ShowLuisResult(context, result);
+        }
+
         private async Task ShowLuisResult(IDialogContext context, LuisResult luisResult)
         {
             await context.PostAsync($"You have reached {luisResult.Intents[0].Intent}. You said: {luisResult.Query}");
@@ -134,6 +133,7 @@ namespace PoutineBot.Dialogs
         {
             context.Wait(MessageReceived);
         }
+
 
         private async Task ProcessSentimentAnalysis(IDialogContext context, LuisResult luisResult)
         {
