@@ -37,64 +37,77 @@ namespace PoutineBot.Dialogs
         [LuisIntent("Order.Poutine")]
         public async Task OrderIntent(IDialogContext context, LuisResult result)
         {
-
-            var order = new OrderForm();
            
-            var typeEntity = result.Entities.FirstOrDefault(x=>x.Type == "Type")?.Entity;
-
-            if (typeEntity != null)
-             {
-               
-                switch (typeEntity)
-                {
-                    case "classique":
-                    case "simple":
-                    case "regulier":
-                    case "régulier":
-                    case "regulière":
-                    case "régulière":
-                        order.Type = TypeOptions.Classique;
-                        break;
-                    case "fermier":
-                        order.Type = TypeOptions.Fermier;
-                        break;
-                    case "maison":
-                        order.Type = TypeOptions.Maison;
-                        break;
-                    case "parrain":
-                        order.Type = TypeOptions.Parrain;
-                        break;
-                }
-            }
+            var typeEntity = result.Entities.FirstOrDefault(x => x.Type == "Type")?.Entity;
 
             var SizeEntity = result.Entities.FirstOrDefault(x => x.Type == "Taille")?.Entity;
 
-            if(SizeEntity!=null)
+            var orderFormDialog = new OrderFormDialog
             {
-                switch (SizeEntity)
-                {
-                    case "petit":
-                    case "junior":
-                    case "petite":
-                        order.Size = SizeOptions.Petite;
-                        break;
-                    case "moyen":
-                    case "moyenne":
-                        order.Size = SizeOptions.Moyenne;
-                        break;
-                    case "grand":
-                    case "grande":
-                    case "senior":
-                        order.Size = SizeOptions.Grande;
-                        break;
+                Type = typeEntity,
+                Size = SizeEntity
 
-                }   
-            }
+            };
 
-            var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptInStart);
-            context.Call<OrderForm>(orderForm, OrderFormComplete);
+             context.Call(orderFormDialog, ResumeAfterDialog);
 
-         
+            //var order = new OrderForm();
+
+            //var typeEntity = result.Entities.FirstOrDefault(x=>x.Type == "Type")?.Entity;
+
+            //if (typeEntity != null)
+            // {
+
+            //    switch (typeEntity)
+            //    {
+            //        case "classique":
+            //        case "simple":
+            //        case "regulier":
+            //        case "régulier":
+            //        case "regulière":
+            //        case "régulière":
+            //            order.Type = TypeOptions.Classique;
+            //            break;
+            //        case "fermier":
+            //            order.Type = TypeOptions.Fermier;
+            //            break;
+            //        case "maison":
+            //            order.Type = TypeOptions.Maison;
+            //            break;
+            //        case "parrain":
+            //            order.Type = TypeOptions.Parrain;
+            //            break;
+            //    }
+            //}
+
+            //var SizeEntity = result.Entities.FirstOrDefault(x => x.Type == "Taille")?.Entity;
+
+            //if(SizeEntity!=null)
+            //{
+            //    switch (SizeEntity)
+            //    {
+            //        case "petit":
+            //        case "junior":
+            //        case "petite":
+            //            order.Size = SizeOptions.Petite;
+            //            break;
+            //        case "moyen":
+            //        case "moyenne":
+            //            order.Size = SizeOptions.Moyenne;
+            //            break;
+            //        case "grand":
+            //        case "grande":
+            //        case "senior":
+            //            order.Size = SizeOptions.Grande;
+            //            break;
+
+            //    }   
+            //}
+
+            //var orderForm = new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptInStart);
+            //context.Call<OrderForm>(orderForm, OrderFormComplete);
+
+
         }
 
 
