@@ -31,6 +31,7 @@ namespace PoutineBot.Dialogs
         [LuisIntent("None")]
         public async Task NoneIntent(IDialogContext context, LuisResult result)
         {
+            //Forward request to QnA Maker
             await context.Forward(new QnaDialog(), ResumeAfterDialog, context.Activity, CancellationToken.None);
         }
 
@@ -48,8 +49,8 @@ namespace PoutineBot.Dialogs
                 Size = SizeEntity
 
             };
-
-             context.Call(orderFormDialog, ResumeAfterDialog);
+            //Call orderFormDialog as a child dialog
+            context.Call(orderFormDialog, ResumeAfterDialog);
 
         }
 
