@@ -41,7 +41,7 @@ Language Understanding (LUIS) allows your application to understand what a perso
 
 LuisBot is a basic sample of how you can integrate LUIS with your bot.
 
-For more details about LUIS read this tutorialhttps://docs.microsoft.com/fr-ca/azure/cognitive-services/LUIS/Home
+For more details about LUIS read this tutorial https://docs.microsoft.com/fr-ca/azure/cognitive-services/LUIS/Home
 
 ## PoutineBot
 
