@@ -8,4 +8,4 @@ PoutineBot is a smart bot which use LUIS, FormFow, Text Analytics API and QnA Ma
 
 PoutineBot est un bot intelligent qui exploite Luis, FormFlow, QnA Maker et Text AnalyticsAPI pour interagir intelligemment avec un utilisateur. Ce dernier permet notamment de passer des commandes de poutine (pour information, la poutine estun plat québécois), de répondre à des questions et d’analyser les feedbacks des utilisateurs pour évaluer leur degré de satisfaction.
 
-Le projet PoutineBot est un excellent moyen de découvrir comment exploiterFormFlow, Luis, QnA Maker et Text Analytics API dans un bot et gérer le flow decommunication entre ces différents services. 
+Le projet PoutineBot est un excellent moyen de découvrir comment exploiter FormFlow, Luis, QnA Maker et Text Analytics API dans un bot et gérer le flow decommunication entre ces différents services. 
