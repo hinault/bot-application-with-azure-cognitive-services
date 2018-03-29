@@ -10,9 +10,9 @@ For more details about Text Analytics AP read this tutorial https://docs.microso
 
 ## Version Française
 
-Text Analytics API est un service Cloud qui offre des fonctionnalités avancées d’analysede texte. Elle dispose de trois fonctionnalités majeures : l’analyse desentiment, l’extraction des mots-clés et la détection de la langue pour untexte.  
+Text Analytics API est un service Cloud qui offre des fonctionnalités avancées d’analyse de texte. Elle dispose de trois fonctionnalités majeures : l’analyse de sentiment, l’extraction des mots-clés et la détection de la langue pour un texte.  
 
-L’analyse de sentiment peut, parexemple, être utilisée pour évaluer le degré de satisfaction d’un utilisateuren procédant en une analyse de ses écrits.
+L’analyse de sentiment peut, par exemple, être utilisée pour évaluer le degré de satisfaction d’un utilisateuren procédant en une analyse de ses écrits.
 
 Le projet Text Analytics montre comment faire appel au service dans un bot.
 
