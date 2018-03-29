@@ -8,6 +8,6 @@ For more information read this tutorial https://docs.microsoft.com/en-us/azure/b
 
 ## Version Française
 
-FormFlow Advanced montre comment utiliser les options avancées de FormFlow pourpersonnaliser le bot et offrir une meilleure expérience utilisateur.
+FormFlow Advanced montre comment utiliser les options avancées de FormFlow pour personnaliser le bot et offrir une meilleure expérience utilisateur.
 
 Pour en savoir plus, consultez le tutoriel suivant :https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-formflow-advanced
