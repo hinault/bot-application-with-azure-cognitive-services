@@ -10,9 +10,9 @@ For more details about LUIS read this tutorial https://docs.microsoft.com/fr-ca/
 
 ## Version Française
 
-Pour demander un service (passer par exemple une commande), plusieurs expressionspeuvent être utilisées. Comment déterminer le besoin de l’utilisateur autravers de son texte ? C’est à ce besoin que LUIS (Language Understanding) répond.Luis permet à votre application de comprendre ce que l’utilisateur veut en sespropres mots. 
+Pour demander un service (passer par exemple une commande), plusieurs expressionspeuvent être utilisées. Comment déterminer le besoin de l’utilisateur au travers de son texte ? C’est à ce besoin que LUIS (Language Understanding) répond. Luis permet à votre application de comprendre ce que l’utilisateur veut en ses propres mots. 
 
-LUIS utilise l’apprentissage machine pour permettre aux développeursde créer des applications en mesure de comprendre le langage naturel, ainsi queles besoins d’un utilisateur.
+LUIS utilise l’apprentissage machine pour permettre aux développeurs de créer des applications en mesure de comprendre le langage naturel, ainsi que les besoins d’un utilisateur.
 
 LuisBot est un exemple simple d’intégration d’un bot avec LUIS.
 
