@@ -10,10 +10,9 @@ For more details about QnA Maker read this tutorial https://docs.microsoft.com/e
 
 ## Version Française
 
-QnA Maker est une API REST et un service web permettant de créer et entrainer uneintelligence artificielle qui sera en mesure de répondre aux questions d’unutilisateur à travers une conversation en langage naturel.
-Le projet Q
+QnA Maker est une API REST et un service web permettant de créer et entrainer une intelligence artificielle qui sera en mesure de répondre aux questions d’un utilisateur à travers une conversation en langage naturel.
 
-A Maker est un exemple de comment rendre son bot plus intelligent en intégrantQnA Maker. Le Bot mis en place utilise QnA Maker afin de fournir une réponseaux questions des utilisateurs.
+Le projet QnA Maker est un exemple de comment rendre son bot plus intelligent en intégrant QnA Maker. Le Bot mis en place utilise QnA Maker afin de fournir une réponse aux questions des utilisateurs.
 
 Pour en savoir plus sur QnA Maker, consultez la documentation suivante : https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/home 
 
