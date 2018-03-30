@@ -23,9 +23,7 @@ namespace PoutineBot.Dialogs
 
             var order = new OrderForm();
 
-            if (Type != null)
-            {
-
+           
                 switch (Type)
                 {
                     case "classique":
@@ -46,10 +44,8 @@ namespace PoutineBot.Dialogs
                         order.Type = TypeOptions.Parrain;
                         break;
                 }
-            }
-
-             if (Size != null)
-            {
+           
+            
                 switch (Size)
                 {
                     case "petit":
@@ -68,7 +64,7 @@ namespace PoutineBot.Dialogs
                         break;
 
                 }
-            }
+           
 
           
             var orderForm =  new FormDialog<OrderForm>(order, OrderForm.BuildForm, FormOptions.PromptInStart);
