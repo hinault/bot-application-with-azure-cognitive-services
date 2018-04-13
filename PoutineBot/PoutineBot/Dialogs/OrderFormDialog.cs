@@ -93,7 +93,7 @@ namespace PoutineBot.Dialogs
 
                 var message = context.MakeMessage();
 
-                message.Text = "Ci-dessous votre reçu!";
+                message.Text = "Commande en cours... \n\n Ci-dessous votre reçu!";
                 message.Attachments.Add(GetReceiptCard(order));
 
 
