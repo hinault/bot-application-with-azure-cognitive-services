@@ -25,7 +25,7 @@ namespace PoutineBot.Forms
                     .Field(nameof(LeaveFeedback))
                     .Field(nameof(Name), state=>state.LeaveFeedback)
                     .Field(nameof(PhoneNumber), state => state.LeaveFeedback)
-                    .Message("Merci. Un de nos responsable vous contactera sous peu.", condition: (form) => form.LeaveFeedback)
+                    .Message("Merci. Un de nos responsables vous contactera sous peu.", condition: (form) => form.LeaveFeedback)
                      .Message("Merci.", condition: (form) => !form.LeaveFeedback)
                     .Build();
         }
